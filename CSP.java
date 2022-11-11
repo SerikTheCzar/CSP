@@ -1,33 +1,46 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
+//vertex edges class, initliazation of project in main
 class Vertex {
     public static void main(String args[]){ 
         //define edges
         Vertex edges[]= {new Vertex("A"), new Vertex("B"), new Vertex("C"), new Vertex("D")};
     
-        //join verices
+        //creatornator --> creates and connects edges together with vertices
         edges[0].connector(edges[1]);
         edges[1].connector(edges[2]);
         edges[2].connector(edges[3]);
         edges[0].connector(edges[3]);
-    
-        //define colors
+        edges[0].connector(edges[3]);
+        edges[2].connector(edges[1]);
+        //this is the list of colors we'll use
         String colors[] = {"Red","Blue"};
     
-        //create color1 object
+        //assign color to an object so we can assign more information to it
         colObj color1 = new colObj(colors, edges.length);
     
-        //start color1 with vertex-A
+        //init at the first edge
         boolean hasSolution = color1.setColors(edges[0]);
-    
-        //check if color1 was successful
+         
+        long startTime = System.nanoTime();
+        //we're going to keep checking if there's a solution
         if (!hasSolution)
-            System.out.println("No Solution");
+            System.out.println("no Solution, failure...");
         else {
+          
+
             for (Vertex vertex: edges){
-                System.out.println(vertex.name + " "+ vertex.color +"\n");
+                System.out.println("solution found!!");
+                System.out.println(vertex.name + " has a color value of "+ vertex.color +"\n");
             }
+            long endTime = System.nanoTime();
+        
+            long duration = (endTime - startTime); 
+            double elapsedTimeInSecond = (double) duration / 1_000_000_000;
+
+            System.out.println("The program took " + elapsedTimeInSecond + " seconds to run");
         }
       }
   String name;
@@ -36,68 +49,91 @@ class Vertex {
   String color;
 
   public Vertex(String name) {
-    this.name = name;
     this.adjacentedges = new ArrayList<>();
-    this.colored =false;
+    this.name = name;
     this.color = "";
+    this.colored =false;
   }
 
-  //connect two edgess bi-directional
+  //connect two edges
   public void connector(Vertex vertex){
     this.adjacentedges.add(vertex);
+    if(isValid(vertex)){
     vertex.adjacentedges.add(this);
+    } else {
+      System.out.println("Please set appropriate vertices");
+    }
+  }
+
+  boolean isValid(Vertex v1) {
+    if(v1.name=="" || v1.color==null || this.adjacentedges == null){
+    return false;
+    } else {
+      return true;
+    }
+
   }
 }
 
 class colObj {
   String colors[];
-  int colorCount;
   int numberOfedges;
+  int colorCount;
 
-  public colObj(String[] colors, int N) {
+  public colObj(String[] colors, int alpha) {
     this.colors = colors;
-    this.numberOfedges = N;
+    this.numberOfedges = alpha;
   }
-
+  
+  //Function to check whether it is valid to color with color[colorIndex]
+  
+  boolean setColHelper(int colorIndex, Vertex vertex) {
+    for(Vertex nbrvertex: vertex.adjacentedges){
+      if(nbrvertex.colored && nbrvertex.color.equals(colors[colorIndex]))
+        return  true;
+    }
+    return false;
+  }
   public boolean setColors(Vertex vertex){
-    //Step: 1
+    //loop through all colors sets
     for(int colorIndex=0; colorIndex<colors.length; colorIndex++){ 
-      //Step-1.1: checking validity
-      if(!canColorWith(colorIndex, vertex)) 
+      //check if possible
+      System.out.println("color index " + colorIndex);
+    //  System.out.println(vertex.name);
+      if(setColHelper(colorIndex, vertex)) 
         continue; 
-
-      //Step-1.2: continue color1 
+      
+      //set vertex = the index that you need
       vertex.color=colors[colorIndex]; 
+      //set it equal to colored
+      System.out.println("test help + " + vertex.color);
       vertex.colored=true; 
+      //iterate one
       colorCount++; 
-
-      //Step-1.3: check whether all edges colored? 
-      if(colorCount== numberOfedges) //base case 
+      System.out.println("this is count " + colorCount);
+      //break case
+      if(colorCount== numberOfedges) //itl quit here
         return true; 
 
-      //Step-1.4: next uncolored vertex 
+      //recursive call
       for(Vertex nbrvertex: vertex.adjacentedges){ 
         if (!nbrvertex.colored){ 
-          if(setColors(nbrvertex))
+          if(setColors(nbrvertex)) //recursive
             return true;
           } 
       }
 
     }
       
-    //Step-4: backtrack 
-    vertex.colored = false;
+    //now we backtrack
+    //so set the color back to empty
+    //and make it uncolored
+    //this is why objects are so useful
     vertex.color = "";
+    vertex.colored = false;
+   
     return false;
   } 
 
-  //Function to check whether it is valid to color with color[colorIndex]
-  boolean canColorWith(int colorIndex, Vertex vertex) {
-    for(Vertex nbrvertex: vertex.adjacentedges){
-      if(nbrvertex.colored && nbrvertex.color.equals(colors[colorIndex]))
-        return  false;
-    }
-    return true;
-  }
 }
                     
