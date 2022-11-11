@@ -1,129 +1,103 @@
-public class CSP {
- 
-    //number of points
-    static int V = 7;
- 
-    //toString method
-    static void printSolution(int[] color)
-    {
-        System.out.println("test here");
-        System.out.println("Found a solution...");
-        for (int i = 0; i < V; i++){
-            System.out.print("  " + color[i]);
-        
-        }
-        System.out.println("");
-    }
-    public void breakOut(boolean [][]graph){
-        //graph = [][];
-        //reset graph 
-        //not going to work, because it's recursive, you couldn't persist the state throughout the multiple calls
-    }
- //given a color and the graph, check if surrounding space satisfies constraints
-    static boolean isSafe(boolean[][] graph, int[] color)
-    {
-        //check all edges
-        for (int i = 0; i < V; i++){
-            for (int j = i + 1; j < V; j++) {
-                if ((graph[i][j]) && color[j] == color[i]) {
-                    //breakOut();
-                    //dont' need this, just cut it with a return statement
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    static void graphColoringHelper(boolean[][]graph, int i) {
-        int a = i;
-        if(a>0) {
-            //break? //base case --> not needed here it turns out
-        } else {
-            graphColoring(graph, a, i, null); //doesn't work
-        } 
-        System.out.println("bbroken here");
-        graphColoringHelper(graph, i); //this isnt' going to work, no real break case
-    } //scratch this
+import java.util.ArrayList;
+import java.util.List;
 
-    public int totalMoveCalculator(int n, boolean[][]graph, int m, int[]color ) {
-        int counter = 0;
-        int b = n;
-        for(int a=0;a<b;a++ ) {
-            if(!didnotbreak()){
-                graphColoring(graph, m, a, color);
-                    System.out.println("test graph + " + graph);
-                counter++;
+class Vertex {
+    public static void main(String args[]){ 
+        //define edges
+        Vertex edges[]= {new Vertex("A"), new Vertex("B"), new Vertex("C"), new Vertex("D")};
+    
+        //join verices
+        edges[0].connector(edges[1]);
+        edges[1].connector(edges[2]);
+        edges[2].connector(edges[3]);
+        edges[0].connector(edges[3]);
+    
+        //define colors
+        String colors[] = {"Red","Blue"};
+    
+        //create color1 object
+        colObj color1 = new colObj(colors, edges.length);
+    
+        //start color1 with vertex-A
+        boolean hasSolution = color1.setColors(edges[0]);
+    
+        //check if color1 was successful
+        if (!hasSolution)
+            System.out.println("No Solution");
+        else {
+            for (Vertex vertex: edges){
+                System.out.println(vertex.name + " "+ vertex.color +"\n");
             }
         }
-//        return counter;
+      }
+  String name;
+  List<Vertex> adjacentedges;
+  boolean colored;
+  String color;
 
-        return counter;
-    }
-    public boolean didnotbreak(){
-        return true;
-    }
-   //recursive M color Solver
-    static boolean graphColoring(boolean[][] graph, int m,
-                                 int i, int[] color)
-    {
-        
-        if (i == V) { //base case
- 
-            // if coloring is safe
-            if (isSafe(graph, color)) {
- 
-                // Print the solution
-                printSolution(color);
-                return true;
-            }
-            return false;
-        }
- 
-        // Assign each color from 1 to m
-        for (int j = 1; j <= m; j++) {
-            color[i] = j;
-           //boolean feo = didnotbreak();
-            // Recur of the rest vertices
-            if (graphColoring(graph, m, i + 1, color)){
-                //if it's possible to color here, return true
-                return true;
-            }
-            //set color back to 0
-            color[i] = 0;
-        }
-        return false;
-    }
- 
-    // Driver code
-    public static void main(String[] args)
-    {
- 
-        /* Create following graph and
-            test whether it is 3 colorable
-            (3)---(2)
-            | / |
-            | / |
-            | / |
-            (0)---(1)
-            */
-        boolean[][] graph = {
-            { false, true, true, true },
-            { true, false, true, false },
-            { true, true, false, true },
-            { true, false, true, false },
-        };
-        int m = 3; // Number of colors
- 
-        // Initialize all color values as 0.
-        // This initialization is needed
-        // correct functioning of isSafe()
-        int[] color = new int[V];
-        for (int i = 0; i < V; i++)
-            color[i] = 0;
- 
-        // Function call
-        if (!graphColoring(graph, m, 0, color))
-            System.out.println("Solution does not exist");
-    }
+  public Vertex(String name) {
+    this.name = name;
+    this.adjacentedges = new ArrayList<>();
+    this.colored =false;
+    this.color = "";
+  }
+
+  //connect two edgess bi-directional
+  public void connector(Vertex vertex){
+    this.adjacentedges.add(vertex);
+    vertex.adjacentedges.add(this);
+  }
 }
- 
+
+class colObj {
+  String colors[];
+  int colorCount;
+  int numberOfedges;
+
+  public colObj(String[] colors, int N) {
+    this.colors = colors;
+    this.numberOfedges = N;
+  }
+
+  public boolean setColors(Vertex vertex){
+    //Step: 1
+    for(int colorIndex=0; colorIndex<colors.length; colorIndex++){ 
+      //Step-1.1: checking validity
+      if(!canColorWith(colorIndex, vertex)) 
+        continue; 
+
+      //Step-1.2: continue color1 
+      vertex.color=colors[colorIndex]; 
+      vertex.colored=true; 
+      colorCount++; 
+
+      //Step-1.3: check whether all edges colored? 
+      if(colorCount== numberOfedges) //base case 
+        return true; 
+
+      //Step-1.4: next uncolored vertex 
+      for(Vertex nbrvertex: vertex.adjacentedges){ 
+        if (!nbrvertex.colored){ 
+          if(setColors(nbrvertex))
+            return true;
+          } 
+      }
+
+    }
+      
+    //Step-4: backtrack 
+    vertex.colored = false;
+    vertex.color = "";
+    return false;
+  } 
+
+  //Function to check whether it is valid to color with color[colorIndex]
+  boolean canColorWith(int colorIndex, Vertex vertex) {
+    for(Vertex nbrvertex: vertex.adjacentedges){
+      if(nbrvertex.colored && nbrvertex.color.equals(colors[colorIndex]))
+        return  false;
+    }
+    return true;
+  }
+}
+                    
