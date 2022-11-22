@@ -8,19 +8,28 @@ class Vertex {
   
     public static void main(String args[]){ 
         //define edges
-        Vertex edges[]= new Vertex[4];
+        Scanner numV = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter a value under 4");
+        String alphabet[] = new String[] {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        int val = numV.nextInt();  // Read user input
+      //
+        Vertex edges[]= new Vertex[val];
+        for(let a=0; a<val; a++) {
+          edges[a] = new Vertex(alphabet[a]);
+        }
+        /*
         edges[0] = new Vertex("A");
         edges[1] = new Vertex("B");
         edges[2] = new Vertex("C");
         edges[3] = new Vertex("D");
-        
+        */
         //creatornator --> creates and connects edges together with vertices
         edges[0].connector(edges[1]);
         edges[1].connector(edges[2]);
         edges[2].connector(edges[3]);
         edges[0].connector(edges[3]);
         edges[0].connector(edges[3]);
-        edges[2].connector(edges[1]);
+        edges[2].connector(edges[1]); //artificially connect the edges
 
         //ask user for 3 colors
         Scanner one = new Scanner(System.in);  // Create a Scanner object
