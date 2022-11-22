@@ -89,8 +89,8 @@ class colObj {
   //Function to check whether it is valid to color with color[colorIndex]
   
   boolean setColHelper(int colorIndex, Vertex vertex) {
-    for(Vertex nbrvertex: vertex.adjacentedges){
-      if(nbrvertex.colBool && nbrvertex.color.equals(colors[colorIndex]))
+    for(Vertex vNode: vertex.adjacentedges){
+      if(vNode.colBool && vNode.color.equals(colors[colorIndex]))
         return  true;
     }
     return false;
@@ -118,9 +118,9 @@ class colObj {
         return true; 
 
       //recursive call
-      for(Vertex nbrvertex: vertex.adjacentedges){ 
-        if (!nbrvertex.colBool){ 
-          if(setColors(nbrvertex)) //recursive
+      for(Vertex vNode: vertex.adjacentedges){ 
+        if (!vNode.colBool){ 
+          if(setColors(vNode)) //recursive
             return true;
           } 
       }
