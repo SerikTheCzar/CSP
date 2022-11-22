@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 //vertex edges class, initliazation of project in main
 class Vertex {
+  
     public static void main(String args[]){ 
         //define edges
         Vertex edges[]= {new Vertex("A"), new Vertex("B"), new Vertex("C"), new Vertex("D")};
@@ -45,14 +46,14 @@ class Vertex {
       }
   String name;
   List<Vertex> adjacentedges;
-  boolean colored;
+  boolean colBool;
   String color;
 
   public Vertex(String name) {
     this.adjacentedges = new ArrayList<>();
     this.name = name;
     this.color = "";
-    this.colored =false;
+    this.colBool =false;
   }
 
   //connect two edges
@@ -89,13 +90,14 @@ class colObj {
   
   boolean setColHelper(int colorIndex, Vertex vertex) {
     for(Vertex nbrvertex: vertex.adjacentedges){
-      if(nbrvertex.colored && nbrvertex.color.equals(colors[colorIndex]))
+      if(nbrvertex.colBool && nbrvertex.color.equals(colors[colorIndex]))
         return  true;
     }
     return false;
   }
   public boolean setColors(Vertex vertex){
     //loop through all colors sets
+
     for(int colorIndex=0; colorIndex<colors.length; colorIndex++){ 
       //check if possible
       System.out.println("color index " + colorIndex);
@@ -105,9 +107,9 @@ class colObj {
       
       //set vertex = the index that you need
       vertex.color=colors[colorIndex]; 
-      //set it equal to colored
+      //set it equal to colBool
       System.out.println("test help + " + vertex.color);
-      vertex.colored=true; 
+      vertex.colBool=true; 
       //iterate one
       colorCount++; 
       System.out.println("this is count " + colorCount);
@@ -117,7 +119,7 @@ class colObj {
 
       //recursive call
       for(Vertex nbrvertex: vertex.adjacentedges){ 
-        if (!nbrvertex.colored){ 
+        if (!nbrvertex.colBool){ 
           if(setColors(nbrvertex)) //recursive
             return true;
           } 
@@ -127,10 +129,10 @@ class colObj {
       
     //now we backtrack
     //so set the color back to empty
-    //and make it uncolored
+    //and make it uncolBool
     //this is why objects are so useful
     vertex.color = "";
-    vertex.colored = false;
+    vertex.colBool = false;
    
     return false;
   } 
