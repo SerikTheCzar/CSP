@@ -1,14 +1,19 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
+import java.util.Scanner;  
 
 //vertex edges class, initliazation of project in main
 class Vertex {
   
     public static void main(String args[]){ 
         //define edges
-        Vertex edges[]= {new Vertex("A"), new Vertex("B"), new Vertex("C"), new Vertex("D")};
-    
+        Vertex edges[]= new Vertex[4];
+        edges[0] = new Vertex("A");
+        edges[1] = new Vertex("B");
+        edges[2] = new Vertex("C");
+        edges[3] = new Vertex("D");
+        
         //creatornator --> creates and connects edges together with vertices
         edges[0].connector(edges[1]);
         edges[1].connector(edges[2]);
@@ -16,8 +21,28 @@ class Vertex {
         edges[0].connector(edges[3]);
         edges[0].connector(edges[3]);
         edges[2].connector(edges[1]);
-        //this is the list of colors we'll use
-        String colors[] = {"Red","Blue"};
+
+        //ask user for 3 colors
+        Scanner one = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter a color");
+    
+        String colorOne = one.nextLine();  // Read user input
+      //  System.out.println("Username is: " + userName);  // Output user input
+        //ask for another color
+        Scanner two = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter a color");
+    
+        String color2 = two.nextLine();  // Read user input
+      //  
+      
+      //ask for another color
+      Scanner three = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter a color");
+    
+        String color3 = three.nextLine();  // Read user input
+      //
+      //this is the list of colors we'll use
+        String colors[] = {colorOne, color2, color3};
     
         //assign color to an object so we can assign more information to it
         colObj color1 = new colObj(colors, edges.length);
