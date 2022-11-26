@@ -100,7 +100,7 @@ class Vertex {
       long duration = (endTime - startTime);
       double elapsedTimeInSecond = (double) duration / 1_000_000_000;
 
-      System.out.println("The program took " + elapsedTimeInSecond + " seconds to run");
+      System.out.println("The program took " + elapsedTimeInSecond + " second(s) to run");
     }
   }
   String name;
