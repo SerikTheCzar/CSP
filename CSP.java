@@ -108,7 +108,9 @@ class Vertex {
   boolean colBool;
   String color;
 
-  public Vertex(String name) {
+
+
+public Vertex(String name) {
     this.adjacentedges = new ArrayList < > ();
     this.name = name;
     this.color = "";
