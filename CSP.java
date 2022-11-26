@@ -127,7 +127,9 @@ class Vertex {
 
   boolean isValid(Vertex v1) {
     if (v1.name == "" || v1.color == null || this.adjacentedges == null) {
+      //System.out.println("Mountain");
       return false;
+      
     } else {
       return true;
     }
@@ -151,6 +153,7 @@ class colObj {
     for (Vertex vNode: vertex.adjacentedges) {
       if (vNode.colBool && vNode.color.equals(colors[colorIndex]))
         return true;
+        //System.out.println("sillyString");
     }
     return false;
   }
