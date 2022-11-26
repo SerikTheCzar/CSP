@@ -114,7 +114,6 @@ class Vertex {
     this.color = "";
     this.colBool = false;
   }
-
   //connect two edges
   public void connector(Vertex vertex) {
     this.adjacentedges.add(vertex);
@@ -127,7 +126,7 @@ class Vertex {
 
   boolean isValid(Vertex v1) {
     if (v1.name == "" || v1.color == null || this.adjacentedges == null) {
-      //System.out.println("Mountain");
+      // System.out.println("Mountain");
       return false;
       
     } else {
