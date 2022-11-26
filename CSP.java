@@ -8,7 +8,7 @@ class Vertex {
   
     public static void main(String args[]){ 
         //define edges
-        Scanner numV = new Scanner(System.in);  // Create a Scanner object
+      //  Scanner numV = new Scanner(System.in);  // Create a Scanner object
         System.out.println("Enter a value under 4");
         String alphabet[] = new String[] {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
         int val = numV.nextInt();  // Read user input
