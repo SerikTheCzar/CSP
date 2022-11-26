@@ -55,7 +55,7 @@ class Vertex {
 
     //ask user for 3 colors
     Scanner one = new Scanner(System.in); // Create a Scanner object
-    System.out.println("Enter a color");
+    System.out.println("Hello user: Please enter a color");
 
     String colorOne = one.nextLine(); // Read user input
     //  System.out.println("Username is: " + userName);  // Output user input
