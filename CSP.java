@@ -17,12 +17,7 @@ class Vertex {
         for(let a=0; a<val; a++) {
           edges[a] = new Vertex(alphabet[a]);
         }
-        /*
-        edges[0] = new Vertex("A");
-        edges[1] = new Vertex("B");
-        edges[2] = new Vertex("C");
-        edges[3] = new Vertex("D");
-        */
+        
         //creatornator --> creates and connects edges together with vertices
         edges[0].connector(edges[1]);
         edges[1].connector(edges[2]);
@@ -120,7 +115,7 @@ class colObj {
     this.numberOfedges = alpha;
   }
   
-  //Function to check whether it is valid to color with color[colorIndex]
+  //recurisve funciton helper, for each vertex check if it's been colored and if it's equal to another color
   
   boolean setColHelper(int colorIndex, Vertex vertex) {
     for(Vertex vNode: vertex.adjacentedges){
