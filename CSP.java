@@ -12,7 +12,7 @@ class Vertex {
         System.out.println("Enter a value under 4");
         String alphabet[] = new String[] {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
         int val = numV.nextInt();  // Read user input
-      //
+      
         Vertex edges[]= new Vertex[val];
         for(let a=0; a<val; a++) {
           edges[a] = new Vertex(alphabet[a]);
