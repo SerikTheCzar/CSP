@@ -41,13 +41,13 @@ class Vertex {
     int val = numV.nextInt(); // Read user input
 
     Vertex edges[] = new Vertex[val];
-    for (let a = 0; a < val; a++) {
+    for (int a = 0; a < val; a++) {
       edges[a] = new Vertex(alphabet[a]);
     }
 
     //creatornator --> creates and connects edges together with vertices
     edges[0].connector(edges[1]);
-    edges[1].connector(edges[2]);
+    edges[1].connector(edges[2]); //automate this
     edges[2].connector(edges[3]);
     edges[0].connector(edges[3]);
     edges[0].connector(edges[3]);
